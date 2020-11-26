@@ -12,9 +12,6 @@ namespace WebCrawler
         public Crawler(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
-
-
-           
         }
 
         public IEnumerable<HttpResponseMessage> CrawlUrisSynchronously(IEnumerable<string> uris)
@@ -23,7 +20,7 @@ namespace WebCrawler
 
             foreach(var uri in uris)
             {
-                HttpResponseMessage response = CrawlUriAsync(uri).Result;
+                HttpResponseMessage response = CrawlUriAsync(uri).Result; // this blocks the current thread
                 result.Add(response);
             }
 
@@ -32,11 +29,25 @@ namespace WebCrawler
 
         public async Task<IEnumerable<HttpResponseMessage>> CrawlUrisAsync(IEnumerable<string> uris)
         {
-            // make parralel
+            IList<HttpResponseMessage> result = new List<HttpResponseMessage>();
 
+            var client = _clientFactory.CreateClient();
 
-            //await CrawlUriAsync(uri);
-            return null;
+            // We simple setup a List of Tasks
+            var requests = uris.Select
+            (
+                uri => CrawlUriAsync(uri)
+            ).ToList();
+
+            await Task.WhenAll(requests);
+
+            //Get the responses
+            var responses = requests.Select
+            (
+                task => task.Result
+            );
+
+            return responses;
         }
 
         public async Task<HttpResponseMessage> CrawlUriAsync(string uri)
