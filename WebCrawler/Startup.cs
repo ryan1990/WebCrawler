@@ -48,13 +48,6 @@ namespace WebCrawler
             {
                 endpoints.MapControllers();
             });
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //    name: "default",
-            //    pattern: "{controller=WeatherForecast}/{action=GetSynchronously}");
-            //});
         }
     }
 }

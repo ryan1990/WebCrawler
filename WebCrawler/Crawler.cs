@@ -14,7 +14,7 @@ namespace WebCrawler
             _clientFactory = clientFactory;
         }
 
-        public IEnumerable<HttpResponseMessage> CrawlUrisSynchronously(IEnumerable<string> uris)
+        public IEnumerable<HttpResponseMessage> CrawlUrisSync(IEnumerable<string> uris)
         {
             IList<HttpResponseMessage> result = new List<HttpResponseMessage>();
 

@@ -28,7 +28,7 @@ namespace WebCrawler.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> CrawlSynch(int length = 10)
+        public IEnumerable<string> CrawlSynchronously(int length = 10)
         {
             IList<string> uris = new List<string>();
 
@@ -41,7 +41,7 @@ namespace WebCrawler.Controllers
 
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
-            IEnumerable<HttpResponseMessage> resp = _crawler.CrawlUrisSynchronously(uris);
+            IEnumerable<HttpResponseMessage> resp = _crawler.CrawlUrisSync(uris);
 
 
             stopwatch.Stop();
@@ -51,7 +51,7 @@ namespace WebCrawler.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> CrawlAsynch(int length = 10)
+        public IEnumerable<string> CrawlAsynchronously(int length = 10) // don't abbreviate to CrawlAsync. Ending a method with "Async" does something special and ruins the Web Api routing!
         {
             IList<string> uris = new List<string>();
 
