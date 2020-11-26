@@ -29,11 +29,24 @@ namespace WebCrawler.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            string uri = "https://api.github.com/repos/aspnet/AspNetCore.Docs/branches";
-            Task<HttpResponseMessage> respTask = _crawler.CrawlUriAsync(uri);
+            IList<string> uris = new List<string>();
 
-            //respTask.RunSynchronously();
-            HttpResponseMessage responseMessage = respTask.Result;
+            int length = 50;
+
+            for (int i = 0; i < length / 3; i++)
+            {
+                uris.Add("https://google.com/");
+                uris.Add("https://yahoo.com/");
+                uris.Add("https://api.github.com/repos/aspnet/AspNetCore.Docs/branches");
+            }
+
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+            IEnumerable<HttpResponseMessage> resp = _crawler.CrawlUrisSynchronously(uris);
+
+
+            stopwatch.Stop();
+            var elapsedMs = stopwatch.ElapsedMilliseconds;
 
             return new List<WeatherForecast>();
             //return responseMessage;

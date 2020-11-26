@@ -17,13 +17,27 @@ namespace WebCrawler
            
         }
 
-        //public async Task<IEnumerable<string>> CrawlUrisAsync(IEnumerable<string> uris)
-        //{
-        //    // make parralel
+        public IEnumerable<HttpResponseMessage> CrawlUrisSynchronously(IEnumerable<string> uris)
+        {
+            IList<HttpResponseMessage> result = new List<HttpResponseMessage>();
 
-        //    string uri = "https://api.github.com/repos/aspnet/AspNetCore.Docs/branches";
-        //    await CrawlUriAsync(uri);
-        //}
+            foreach(var uri in uris)
+            {
+                HttpResponseMessage response = CrawlUriAsync(uri).Result;
+                result.Add(response);
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<HttpResponseMessage>> CrawlUrisAsync(IEnumerable<string> uris)
+        {
+            // make parralel
+
+
+            //await CrawlUriAsync(uri);
+            return null;
+        }
 
         public async Task<HttpResponseMessage> CrawlUriAsync(string uri)
         {

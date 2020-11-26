@@ -8,6 +8,8 @@ namespace WebCrawler
 {
     public interface ICrawler
     {
-        Task<HttpResponseMessage> CrawlUriAsync(string uri);
+        public IEnumerable<HttpResponseMessage> CrawlUrisSynchronously(IEnumerable<string> uris);
+        public Task<IEnumerable<HttpResponseMessage>> CrawlUrisAsync(IEnumerable<string> uris);
+        public Task<HttpResponseMessage> CrawlUriAsync(string uri);
     }
 }
