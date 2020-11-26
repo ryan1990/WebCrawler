@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace WebCrawler.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]/[action]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -26,12 +26,46 @@ namespace WebCrawler.Controllers
             _crawler = crawler;
         }
 
+        //[HttpGet]
+        //public IEnumerable<WeatherForecast> Get()
+        //{
+        //    IList<string> uris = new List<string>();
+
+        //    int length = 50;
+
+        //    for (int i = 0; i < length / 3; i++)
+        //    {
+        //        uris.Add("https://google.com/");
+        //        uris.Add("https://yahoo.com/");
+        //        uris.Add("https://api.github.com/repos/aspnet/AspNetCore.Docs/branches");
+        //    }
+
+        //    var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+        //    IEnumerable<HttpResponseMessage> resp = _crawler.CrawlUrisSynchronously(uris);
+
+
+        //    stopwatch.Stop();
+        //    var elapsedMs = stopwatch.ElapsedMilliseconds;
+
+        //    return new List<WeatherForecast>();
+        //    //return responseMessage;
+
+
+        //    //var rng = new Random();
+        //    //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        //    //{
+        //    //    Date = DateTime.Now.AddDays(index),
+        //    //    TemperatureC = rng.Next(-20, 55),
+        //    //    Summary = Summaries[rng.Next(Summaries.Length)]
+        //    //})
+        //    //.ToArray();
+        //}
+
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<string> GetSynchronously(int length = 10)
         {
             IList<string> uris = new List<string>();
-
-            int length = 50;
 
             for (int i = 0; i < length / 3; i++)
             {
@@ -48,18 +82,8 @@ namespace WebCrawler.Controllers
             stopwatch.Stop();
             var elapsedMs = stopwatch.ElapsedMilliseconds;
 
-            return new List<WeatherForecast>();
+            return new string[] { "elapsedMs", elapsedMs.ToString() };
             //return responseMessage;
-
-
-            //var rng = new Random();
-            //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            //{
-            //    Date = DateTime.Now.AddDays(index),
-            //    TemperatureC = rng.Next(-20, 55),
-            //    Summary = Summaries[rng.Next(Summaries.Length)]
-            //})
-            //.ToArray();
         }
     }
 }
