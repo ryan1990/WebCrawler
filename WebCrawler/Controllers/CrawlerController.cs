@@ -34,11 +34,11 @@ namespace WebCrawler.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> CrawlAsynchronously(int count = 10) // don't abbreviate to CrawlAsync. Ending a method with "Async" does something special and ruins the Web Api routing!
+        public async Task<IEnumerable<string>> CrawlAsynchronously(int count = 10) // don't abbreviate to CrawlAsync. Ending a method with "Async" does something special and ruins the Web Api routing!
         {
             IEnumerable<string> uris = BuildUris(count);
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-            IEnumerable<HttpResponseMessage> resp = _crawler.CrawlUrisAsync(uris).Result; // is this going to freeze some thread in a bad way and mess up the server???
+            IEnumerable<HttpResponseMessage> resp = await _crawler.CrawlUrisAsync(uris);
             stopwatch.Stop();
             var elapsedMs = stopwatch.ElapsedMilliseconds;
             return new string[] { "elapsedMs:", elapsedMs.ToString(), "uri count:", count.ToString() };

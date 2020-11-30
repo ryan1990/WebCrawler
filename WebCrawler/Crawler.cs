@@ -32,20 +32,32 @@ namespace WebCrawler
             IList<HttpResponseMessage> result = new List<HttpResponseMessage>();
 
             var client = _clientFactory.CreateClient();
+            var requests = new List<Task<HttpResponseMessage>>();
+            foreach (string uri in uris)
+            {
+                requests.Add(CrawlUriAsync(uri));
+            }
 
-            // We simple setup a List of Tasks
-            var requests = uris.Select
-            (
-                uri => CrawlUriAsync(uri)
-            ).ToList();
+            // THIS ALSO WORKS:
+            //// We simple setup a List of Tasks (requests)
+            //var requests = uris.Select
+            //(
+            //    uri => CrawlUriAsync(uri)
+            //).ToList();
 
-            await Task.WhenAll(requests);
+            // for synchronous method:
+            // requests.Add(Task.Run(synchronousMethod))
+
+            var responses = await Task.WhenAll(requests);
+
+            // THIS ALSO WORKS:
+            //await Task.WhenAll(requests);
 
             //Get the responses
-            var responses = requests.Select
-            (
-                task => task.Result
-            );
+            //var responses = requests.Select
+            //(
+            //    task => task.Result
+            //);
 
             return responses;
         }
