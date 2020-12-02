@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: webcrawlerimage 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webcrawlerimage
+  template:
+    metadata:
+      labels:
+        app: webcrawlerimage 
+    spec:
+      containers:
+        - name: webcrawlerimage 
+          image: webcrawlercontainerregistry.azurecr.io/webcrawlerimage
+          ports:
+          - containerPort: 8888
