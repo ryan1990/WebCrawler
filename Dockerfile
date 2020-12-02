@@ -1,8 +1,9 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
-WORKDIR /source
+WORKDIR /WebCrawler
 
 # Copy csproj and restore as distinct layers
 COPY *.csproj ./
+# COPY aspnetapp/*.csproj ./aspnetapp/
 RUN dotnet restore
 
 # Copy everything else and build
