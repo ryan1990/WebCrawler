@@ -38,7 +38,8 @@ namespace WebCrawler
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // removed this so we can access HTTP on port 5000 and HTTPS on port 5001
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
