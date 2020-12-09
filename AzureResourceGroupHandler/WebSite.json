@@ -40,6 +40,63 @@
     "webSiteName": "[concat('webSite', uniqueString(resourceGroup().id))]"
   },
   "resources": [
+    //{
+    //  "type": "Microsoft.ContainerRegistry/registries",
+    //  "apiVersion": "2019-12-01-preview",
+    //  "name": "WebCrawlerContainerRegistryArm",
+    //  "location": "[resourceGroup().location]",
+    //  "sku": {
+    //    "name": "Basic",
+    //    "tier": "Basic"
+    //  },
+    //  "properties": {
+    //    "adminUserEnabled": false,
+    //    "policies": {
+    //      "quarantinePolicy": {
+    //        "status": "disabled"
+    //      },
+    //      "trustPolicy": {
+    //        "type": "Notary",
+    //        "status": "disabled"
+    //      },
+    //      "retentionPolicy": {
+    //        "days": 7,
+    //        "status": "disabled"
+    //      }
+    //    },
+    //    "encryption": {
+    //      "status": "disabled"
+    //    },
+    //    "dataEndpointEnabled": false,
+    //    "publicNetworkAccess": "Enabled"
+    //  }
+    //},
+    //{
+    //  "type": "Microsoft.ContainerService/managedClusters",
+    //  "apiVersion": "2020-09-01",
+    //  "name": "WebCrawlerArm",
+    //  "location": "[resourceGroup().location]",
+    //  "properties": {
+    //    "kubernetesVersion": "1.18.10",
+    //    //"dnsPrefix": "[concat(parameters('managedClusters_webcrawler_name'), '-', parameters('managedClusters_webcrawler_name'), '-rg-c72165')]",
+    //    "agentPoolProfiles": [
+    //      {
+    //        "name": "nodepool1",
+    //        "count": 1,
+    //        "vmSize": "Standard_DS2_v2",
+    //        "osDiskSizeGB": 128,
+    //        "osDiskType": "Managed",
+    //        "maxPods": 110,
+    //        "type": "VirtualMachineScaleSets",
+    //        "orchestratorVersion": "1.18.10",
+    //        "enableNodePublicIP": false,
+    //        "nodeLabels": {},
+    //        "mode": "System",
+    //        "osType": "Linux"
+    //      }
+    //    ]
+    //  }
+    //},
     {
       "apiVersion": "2015-08-01",
       "name": "[parameters('hostingPlanName')]",
