@@ -7,6 +7,12 @@
     },
     "registries_WebCrawlerContainerRegistry_name": {
       "value": "WebCrawlerContainerRegistryArm"
+    },
+    "linuxAdminUsername": {
+      "value": "ryan"
+    },
+    "sshRSAPublicKey": {
+      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUN/lWOFJMXtnoJZNpmws7fWhTUjROD4PbltdL4qzy9N3mBrFKXf+uvyw4tTsHwESy7a8UtQeBuyHATQ9pFAV98nzFL58putbp90cQRE1XHNT4jSHCVEp/baY5Ha6iy4TFCVPMdt6/fKwIoGeos4V26Mu3QKrwVwoCnGknlkufi15zEImBi5gbrYjIVbHx/tnQSzKmmckM0CqlU80Z4kznzDMSg4uryL3MM5eAqt4HdEGq0jAz/VPwCYTVqpg90aThUHNam9CPNm1Awti88KvsFKucLz+VaKn8XhunD32k281+kqhLQ6a5KyJqylaAoZQjFpLWDpYMFEVRFSp5LFND ryan_2@Ryan-Lenovo-PC"
     }
   }
 }
