@@ -1,5 +1,4 @@
-
-WebCrawler is a Web API app that demonstrates the performance differences between hitting URLs synchronously and asynchronously. It also demonstrates the use of Kubernetes (with Azure Kubernetes Service), which is defined as Infrastructure as Code in an ARM template. It also demonstrates using Azure DevOps Pipelines to automate deployment to Azure Kubernetes Service by CI/CD.
+WebCrawler is a Web API app that demonstrates the performance differences between hitting URLs synchronously and asynchronously. It also demonstrates the use of Docker and Kubernetes (with Azure Kubernetes Service), which is defined as Infrastructure as Code in the ARM template. It also demonstrates using Azure DevOps Pipelines to automate deployment to Azure Kubernetes Service by CI/CD.
 
 
 To run WebCrawler using Kestrel locally:
