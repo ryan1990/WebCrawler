@@ -1,152 +1,113 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "managedClusters_webcrawler_name": {
-            "defaultValue": "webcrawler",
-            "type": "String"
-        },
-        "registries_WebCrawlerContainerRegistry_name": {
-            "defaultValue": "WebCrawlerContainerRegistry",
-            "type": "String"
-        },
-        "workspaces_defaultworkspace_c721659d_790f_4141_84b2_60cc9c663747_eus_externalid": {
-            "defaultValue": "/subscriptions/c721659d-790f-4141-84b2-60cc9c663747/resourceGroups/defaultresourcegroup-eus/providers/microsoft.operationalinsights/workspaces/defaultworkspace-c721659d-790f-4141-84b2-60cc9c663747-eus",
-            "type": "String"
-        },
-        "publicIPAddresses_8e4e5e02_6678_45b7_b93e_a0487e2e2639_externalid": {
-            "defaultValue": "/subscriptions/c721659d-790f-4141-84b2-60cc9c663747/resourceGroups/MC_webcrawler-rg_webcrawler_eastus/providers/Microsoft.Network/publicIPAddresses/8e4e5e02-6678-45b7-b93e-a0487e2e2639",
-            "type": "String"
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "managedClusters_webcrawler_name": {
+      "defaultValue": "webcrawler",
+      "type": "String"
     },
-    "variables": {},
+    "registries_WebCrawlerContainerRegistry_name": {
+      "defaultValue": "WebCrawlerContainerRegistry",
+      "type": "String"
+    },
+    "linuxAdminUsername": {
+      "defaultValue": "linuxAdminUsernameDefault",
+      "type": "String"
+    },
+    "sshRSAPublicKey": {
+      "type": "String"
+    }
+    },
     "resources": [
-        {
-            "type": "Microsoft.ContainerRegistry/registries",
-            "apiVersion": "2019-12-01-preview",
-            "name": "[parameters('registries_WebCrawlerContainerRegistry_name')]",
-            "location": "eastus",
-            "sku": {
-                "name": "Basic",
-                "tier": "Basic"
-            },
-            "properties": {
-                "adminUserEnabled": false,
-                "policies": {
-                    "quarantinePolicy": {
-                        "status": "disabled"
-                    },
-                    "trustPolicy": {
-                        "type": "Notary",
-                        "status": "disabled"
-                    },
-                    "retentionPolicy": {
-                        "days": 7,
-                        "status": "disabled"
-                    }
-                },
-                "encryption": {
-                    "status": "disabled"
-                },
-                "dataEndpointEnabled": false,
-                "publicNetworkAccess": "Enabled"
-            }
+      {
+        "type": "Microsoft.ContainerRegistry/registries",
+        "apiVersion": "2019-12-01-preview",
+        "name": "[parameters('registries_WebCrawlerContainerRegistry_name')]",
+        "location": "[resourceGroup().location]",
+        "sku": {
+          "name": "Basic",
+          "tier": "Basic"
         },
-        {
-            "type": "Microsoft.ContainerService/managedClusters",
-            "apiVersion": "2020-09-01",
-            "name": "[parameters('managedClusters_webcrawler_name')]",
-            "location": "eastus",
-            "sku": {
-                "name": "Basic",
-                "tier": "Free"
+        "properties": {
+          "adminUserEnabled": false,
+          "policies": {
+            "quarantinePolicy": {
+              "status": "disabled"
             },
-            "properties": {
-                "kubernetesVersion": "1.18.10",
-                "dnsPrefix": "[concat(parameters('managedClusters_webcrawler_name'), '-', parameters('managedClusters_webcrawler_name'), '-rg-c72165')]",
-                "agentPoolProfiles": [
-                    {
-                        "name": "nodepool1",
-                        "count": 1,
-                        "vmSize": "Standard_DS2_v2",
-                        "osDiskSizeGB": 128,
-                        "osDiskType": "Managed",
-                        "maxPods": 110,
-                        "type": "VirtualMachineScaleSets",
-                        "orchestratorVersion": "1.18.10",
-                        "enableNodePublicIP": false,
-                        "nodeLabels": {},
-                        "mode": "System",
-                        "osType": "Linux"
-                    }
-                ],
-                "linuxProfile": {
-                    "adminUsername": "azureuser",
-                    "ssh": {
-                        "publicKeys": [
-                            {
-                                "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAadw8pEfdvuJM/pKycvG4lneWsh5+0BPvvrNoVODjUabm4kTliKTIB10cGbbu73u7Z3a1aAkL8suDYnwC5mEqZ99M3uIuhmx38X5gZLgMS909pROSOWQu91azvwxCs+WPMFl9f5JYPJ8udbxtkuNwobn3srUzOnX4ji9lIbjZgG8ksG0fmXw6i11lNhW1fkvWFPKOblbMPWmRh7jOkWO+24G22rWZziB6ltBA6JMfQ4rCTo3wVZqPI99Y5VvR8hzKvjyPvwcQrfEpueAmRQhpTqwp/cKNMc91D+cVv+Jdg00vJm/VNtpHbhL2BQT+dPZ2DVTHRZu4RcehxRophU87"
-                            }
-                        ]
-                    }
-                },
-                "servicePrincipalProfile": {
-                    "clientId": "91737af5-a72a-4021-90da-797930adb090"
-                },
-                "addonProfiles": {
-                    "KubeDashboard": {
-                        "enabled": false
-                    },
-                    "omsagent": {
-                        "enabled": true,
-                        "config": {
-                            "logAnalyticsWorkspaceResourceID": "[parameters('workspaces_defaultworkspace_c721659d_790f_4141_84b2_60cc9c663747_eus_externalid')]"
-                        }
-                    }
-                },
-                "nodeResourceGroup": "[concat('MC_', parameters('managedClusters_webcrawler_name'), '-rg_', parameters('managedClusters_webcrawler_name'), '_eastus')]",
-                "enableRBAC": true,
-                "networkProfile": {
-                    "networkPlugin": "kubenet",
-                    "loadBalancerSku": "Standard",
-                    "loadBalancerProfile": {
-                        "managedOutboundIPs": {
-                            "count": 1
-                        },
-                        "effectiveOutboundIPs": [
-                            {
-                                "id": "[parameters('publicIPAddresses_8e4e5e02_6678_45b7_b93e_a0487e2e2639_externalid')]"
-                            }
-                        ]
-                    },
-                    "podCidr": "10.244.0.0/16",
-                    "serviceCidr": "10.0.0.0/16",
-                    "dnsServiceIP": "10.0.0.10",
-                    "dockerBridgeCidr": "172.17.0.1/16",
-                    "outboundType": "loadBalancer"
-                }
+            "trustPolicy": {
+              "type": "Notary",
+              "status": "disabled"
+            },
+            "retentionPolicy": {
+              "days": 7,
+              "status": "disabled"
             }
-        },
-        {
-            "type": "Microsoft.ContainerService/managedClusters/agentPools",
-            "apiVersion": "2020-09-01",
-            "name": "[concat(parameters('managedClusters_webcrawler_name'), '/nodepool1')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.ContainerService/managedClusters', parameters('managedClusters_webcrawler_name'))]"
-            ],
-            "properties": {
-                "count": 1,
-                "vmSize": "Standard_DS2_v2",
-                "osDiskSizeGB": 128,
-                "osDiskType": "Managed",
-                "maxPods": 110,
-                "type": "VirtualMachineScaleSets",
-                "orchestratorVersion": "1.18.10",
-                "enableNodePublicIP": false,
-                "nodeLabels": {},
-                "mode": "System",
-                "osType": "Linux"
-            }
+          },
+          "encryption": {
+            "status": "disabled"
+          },
+          "dataEndpointEnabled": false,
+          "publicNetworkAccess": "Enabled"
         }
+      },
+      {
+        "type": "Microsoft.ContainerService/managedClusters",
+        "apiVersion": "2020-09-01",
+        "name": "[parameters('managedClusters_webcrawler_name')]",
+        "location": "[resourceGroup().location]",
+        "properties": {
+          "dnsPrefix": "[concat(parameters('managedClusters_webcrawler_name'), '-', parameters('managedClusters_webcrawler_name'), '-rg-c72165')]",
+          "agentPoolProfiles": [
+            {
+              "name": "nodepool1",
+              "count": 1,
+              "vmSize": "Standard_DS2_v2",
+              "osDiskSizeGB": 128,
+              "osDiskType": "Managed",
+              "maxPods": 110,
+              "type": "VirtualMachineScaleSets",
+              "orchestratorVersion": "1.18.10",
+              "enableNodePublicIP": false,
+              "nodeLabels": {},
+              "mode": "System",
+              "osType": "Linux"
+            }
+          ],
+          "linuxProfile": {
+            "adminUsername": "[parameters('linuxAdminUsername')]",
+            "ssh": {
+              "publicKeys": [
+                {
+                  "keyData": "[parameters('sshRSAPublicKey')]"
+                }
+              ]
+            }
+          }
+        },
+        "identity": {
+          "type": "SystemAssigned"
+        }
+      },
+      {
+        "type": "Microsoft.ContainerService/managedClusters/agentPools",
+        "apiVersion": "2020-09-01",
+        "name": "[concat(parameters('managedClusters_webcrawler_name'), '/nodepool1')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.ContainerService/managedClusters', parameters('managedClusters_webcrawler_name'))]"
+        ],
+        "properties": {
+          "count": 1,
+          "vmSize": "Standard_DS2_v2",
+          "osDiskSizeGB": 128,
+          "osDiskType": "Managed",
+          "maxPods": 110,
+          "type": "VirtualMachineScaleSets",
+          "orchestratorVersion": "1.18.10",
+          "enableNodePublicIP": false,
+          "nodeLabels": {},
+          "mode": "System",
+          "osType": "Linux"
+        }
+      }
     ]
-}
+  }

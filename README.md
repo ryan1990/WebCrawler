@@ -1,6 +1,6 @@
 
-WebCrawler
-README.md
+WebCrawler is a Web API app that demonstrates the performance differences between hitting URLs synchronously and asynchronously. It also demonstrates the use of Kubernetes (with Azure Kubernetes Service), which is defined as Infrastructure as Code in an ARM template. It also demonstrates using Azure DevOps Pipelines to automate deployment to Azure Kubernetes Service by CI/CD.
+
 
 To run WebCrawler using Kestrel locally:
 use cmd: dotnet run
@@ -15,7 +15,7 @@ docker build -t wcc .
 docker run -p 3000:80 wcc
 
 
-Instead of using the big generated ARM Template to deploy stuff into the webcrawler-rg resource group, running this from the Azure CLI is much easier!
+Instead of using the ARM Template to deploy stuff into the webcrawler-rg resource group, you can run this from the Azure CLI!
 See if something like this can be Infrastructure as Code!
 
 # Create a resource group
@@ -34,6 +34,7 @@ Copy and paste the public part of your SSH key pair (by default, the contents of
 For more details:
 https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-rm-template
 
+Related resources:
 To run kubectl locally connected to AKS:
 https://zero-to-jupyterhub.readthedocs.io/en/latest/kubernetes/microsoft/step-zero-azure.html
 
