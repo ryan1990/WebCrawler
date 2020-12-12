@@ -15,7 +15,7 @@ https://localhost:5001/api/crawler/crawlasynchronously
 docker build -t wcc .
 docker run -p 3000:80 wcc
 
-### To use Azure CLI to setup the Kubernetes cluster and Container Repository in Azure:
+### To use Azure CLI to setup the Kubernetes cluster and Container Registry in Azure:
 Instead of using the ARM Template to deploy stuff into the webcrawler-rg resource group, you can run this from the Azure CLI!
 See if something like this can be Infrastructure as Code!
 
