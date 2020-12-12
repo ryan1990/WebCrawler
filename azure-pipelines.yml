@@ -11,12 +11,12 @@ resources:
 variables:
 
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '6c365761-4e62-4ce6-8527-445bcc1f9746'
-  imageRepository: 'webcrawlerimage'
-  containerRegistry: 'webcrawlercontainerregistry.azurecr.io'
+  dockerRegistryServiceConnection: '2f2731cb-955c-4f7a-9f70-b94cb1e3c1bf'
+  imageRepository: 'ryanwebcrawler'
+  containerRegistry: 'webcrawlercontainerregistryarm.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
-  imagePullSecret: 'webcrawlercontainerregistry6105-auth'
+  imagePullSecret: 'webcrawlercontainerregistryarm9aba-auth'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -56,7 +56,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'ryan1990WebCrawler.default'
+    environment: 'ryan1990WebCrawler-2458.default'
     strategy:
       runOnce:
         deploy:
@@ -86,7 +86,7 @@ stages:
     pool:
       vmImage: $(vmImageName)
       
-    environment: 'ryan1990WebCrawler.$(k8sNamespaceForPR)'
+    environment: 'ryan1990WebCrawler-2458.$(k8sNamespaceForPR)'
     strategy:
       runOnce:
         deploy:
