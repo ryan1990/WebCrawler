@@ -27,6 +27,13 @@ az acr create --resource-group webcrawler-rg --name WebCrawlerContainerRegistry 
 # Create a Kubernetes cluster
 az aks create --resource-group webcrawler-rg --name WebCrawler --node-count 1 --enable-addons monitoring --generate-ssh-keys --kubernetes-version 1.19.1
 
+In parameters file, you must set "sshRSAPublicKey".
+Run this in the command prompt:
+ssh-keygen -t rsa -b 2048
+Copy and paste the public part of your SSH key pair (by default, the contents of ~/.ssh/id_rsa.pub).
+For more details:
+https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-rm-template
+
 To run kubectl locally connected to AKS:
 https://zero-to-jupyterhub.readthedocs.io/en/latest/kubernetes/microsoft/step-zero-azure.html
 
