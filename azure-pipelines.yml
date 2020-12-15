@@ -15,7 +15,7 @@ variables:
   imageRepository: 'ryanwebcrawler'
   containerRegistry: 'webcrawlercontainerregistryarm.azurecr.io'
   dockerfilePath: '**/Dockerfile'
-  tag: 'latest' #'$(Build.BuildId)'
+  tag: $(Build.BuildId)'
   imagePullSecret: 'webcrawlercontainerregistryarm9aba-auth'
 
   # Agent VM image name
@@ -78,7 +78,7 @@ stages:
               imagePullSecrets: |
                 $(imagePullSecret)
               containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
+                $(containerRegistry)/$(imageRepository):53
 
   - deployment: DeployPullRequest
     displayName: Deploy Pull request
