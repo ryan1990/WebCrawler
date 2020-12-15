@@ -15,7 +15,7 @@ variables:
   imageRepository: 'ryanwebcrawler'
   containerRegistry: 'webcrawlercontainerregistryarm.azurecr.io'
   dockerfilePath: '**/Dockerfile'
-  tag: '$(Build.BuildId)'
+  tag: 'latest' #'$(Build.BuildId)'
   imagePullSecret: 'webcrawlercontainerregistryarm9aba-auth'
 
   # Agent VM image name
